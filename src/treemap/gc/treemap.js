@@ -19,12 +19,13 @@ function drawChart() {
         return [
             d.id,
             d.id.substring(0, d.id.lastIndexOf("\\")) == "" ? null : d.id.substring(0, d.id.lastIndexOf("\\")),
-            +d.value // must be a numeric
+            +d.value, // must be a numeric
+            +d.value/2 // Color
         ];
     });
 
     // Add the headers as the first row
-    dataCsvArray.splice(0,0,["Id","Parent","Value"])
+    dataCsvArray.splice(0,0,["Id","Parent","Value","Color"])
 
 
 
@@ -33,16 +34,36 @@ function drawChart() {
 
     tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
 
-    tree.draw(dataTableCsv, {
-        minColor: '#f00',
-        midColor: '#ddd',
-        maxColor: '#0d0',
+    // The full list of options
+    // https://developers.google.com/chart/interactive/docs/gallery/treemap#configuration--options
+    var options = {
+        // highlightOnMouseOver: true,
+        // maxDepth: 1,
+        // maxPostDepth: 2,
+        // minHighlightColor: '#8c6bb1',
+        // midHighlightColor: '#9ebcda',
+        // maxHighlightColor: '#edf8fb',
+        minColor: '#26A599',
+        //midColor: '#f7f7f7',
+        maxColor: '#82C9C2',
+        // minColor: '#f00',
+        // midColor: '#ddd',
+        // maxColor: '#0d0',
+        //useWeightedAverageForAggregation: true,
         headerHeight: 15,
         fontColor: 'black',
         showScale: true,
         generateTooltip: showStaticTooltip
-    });
+    };
+    tree.draw(dataTableCsv, options);
 
+    /**
+     *
+     * @param row - the cell's row from the datatable
+     * @param size - the sum of the value (column 3) of this cell and all its children
+     * @param value - the color of the cell, expressed as a number from 0 to 1
+     * @returns {string}
+     */
     function showStaticTooltip(row, size, value) {
         return '<div style="background:#fd9; padding:10px; border-style:solid">' +
             'Size ('+size+'), Value ('+value+')';

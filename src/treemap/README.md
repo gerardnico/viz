@@ -10,5 +10,5 @@
   
 ### Google Chart
 
-  * [Treemap Google Chart](gc)
+  * [Treemap Google Chart](gc) -  **Value of parents node are derived from their leaves**
 

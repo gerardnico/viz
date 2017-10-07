@@ -6,12 +6,14 @@
    * read a CSV file with the help of the [d3-dsv](https://github.com/d3/d3-dsv) library.
    * show the value as tooltip
 
+**!!! Value of parents node are derived from their leaves !!!**
 
 ## Data Structure
 The input data must contains the following columns:
   * The Name of the node
   * The parent of the node (`null` for the root)
-  * The value of the leave node. Value of parents are derived from their leaves.
+  * The value of the leave node. **!!! Value of parents are derived from their leaves !!!**.
+  * (Optional) An optional value used to calculate a color for this node. The color is gradient between minColor and maxColor. 
 
 In the below example, the parent is contained in the `Id`, The parent is derived in the code from the `Id`.
 ```csv
