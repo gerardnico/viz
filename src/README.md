@@ -1,6 +1,5 @@
-# D3 Visualization
+# Visualization Demo
 
 
 ## List
-  * [D3 TreeMap Layout wit HTML Div element over een CSV file](treemapLeaveDiv)
-  * [D3 TreeMap Layout wit Svg element](treemapSvg)
+  * [Treemap](treemap)

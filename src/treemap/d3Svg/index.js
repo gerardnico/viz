@@ -10,6 +10,7 @@
         color = d3.scaleOrdinal(d3.schemeCategory20.map(fader)),
         format = d3.format(",d");
 
+    // Treemap Layout parameters
     var treemap = d3.treemap()
         .tile(d3.treemapResquarify)
         .size([width, height])
