@@ -30,32 +30,32 @@ function drawChart() {
 
 
     /*global google */
-    var dataTableCsv = google.visualization.arrayToDataTable(dataCsvArray);
+    var dataTable = google.visualization.arrayToDataTable(dataCsvArray);
 
     tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
 
     // The full list of options
     // https://developers.google.com/chart/interactive/docs/gallery/treemap#configuration--options
-    var options = {
-        // highlightOnMouseOver: true,
-        // maxDepth: 1,
-        // maxPostDepth: 2,
-        // minHighlightColor: '#8c6bb1',
-        // midHighlightColor: '#9ebcda',
-        // maxHighlightColor: '#edf8fb',
-        minColor: '#26A599',
-        //midColor: '#f7f7f7',
-        maxColor: '#82C9C2',
-        // minColor: '#f00',
-        // midColor: '#ddd',
-        // maxColor: '#0d0',
-        //useWeightedAverageForAggregation: true,
-        headerHeight: 15,
-        fontColor: 'black',
-        showScale: true,
-        generateTooltip: showStaticTooltip
-    };
-    tree.draw(dataTableCsv, options);
+var options = {
+    // highlightOnMouseOver: true,
+    // maxDepth: 1,
+    // maxPostDepth: 2,
+    // minHighlightColor: '#8c6bb1',
+    // midHighlightColor: '#9ebcda',
+    // maxHighlightColor: '#edf8fb',
+    minColor: '#26A599',
+    midColor: '#82C9C2',
+    maxColor: '#C9DCD3',
+    // minColor: '#f00',
+    // midColor: '#ddd',
+    // maxColor: '#0d0',
+    //useWeightedAverageForAggregation: true,
+    headerHeight: 15,
+    fontColor: 'black',
+    showScale: true,
+    generateTooltip: showStaticTooltip
+};
+    tree.draw(dataTable, options);
 
     /**
      *
@@ -66,7 +66,13 @@ function drawChart() {
      */
     function showStaticTooltip(row, size, value) {
         return '<div style="background:#fd9; padding:10px; border-style:solid">' +
-            'Size ('+size+'), Value ('+value+')';
+            '<span style="font-family:Courier"><b>' + dataTable.getValue(row, 0) +
+            '</b>, ' + dataTable.getValue(row, 1) + ', ' + dataTable.getValue(row, 2) +
+            ', ' + dataTable.getValue(row, 3) + '</span><br>' +
+            'Datatable row: ' + row + '<br>' +
+            dataTable.getColumnLabel(2) +
+            ' (total value of this cell and its children): ' + size + '<br>' +
+            dataTable.getColumnLabel(3) + ': ' + value + ' </div>';
     }
 
 

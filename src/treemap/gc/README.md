@@ -38,4 +38,28 @@ dataInlineArray = [
 ];
 ```
 
+## Color
 
+### Gradient
+The color schema is a gradient of the value of the column 3 (2 if the column 3 does'nt exist).
+
+The gradient goes from:
+  * the color of the minimum `minColor` (Default to red #dd0000)
+  * through the color of the median `midColor` (Default to white #000000)
+  * til the color of the maximum `maxColor` (Default to green #00dd00)
+
+### Scale
+The scale can be bounded by defining the options:
+  * `minColorValue`
+  * `maxColorValue`
+The scale legend is shown if the option `showScale` is `true`.
+
+### Color Options Example
+```javascript
+var options = {
+    minColor: '#26A599', // Green Dark
+    midColor: '#82C9C2', // Green Clear
+    maxColor: '#C9DCD3', // Grey Clear
+    showScale: true
+};
+```
