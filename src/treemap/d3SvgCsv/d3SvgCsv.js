@@ -26,19 +26,29 @@ d3.csv("data.csv", function (d) {
 }, function (error, data) {
     if (error) throw error;
 
-    var root = stratify(data)
+    var tree = stratify(data)
         .sum(function (d) {
             return +d.size;
         })
         .sort(function (a, b) {
-            return b.height - a.height || b.value - a.value;
+            return b.value - a.value || b.height - a.height;
         });
 
+    tree.eachAfter(function (d) {
+            if (d.value < 30) {
+                // Suppress the node from the parent
+                const index = d.parent.children.indexOf(d);
+                if (index !== -1) {
+                    d.parent.children.splice(index, 1);
+                }
+            }
+        }
+    );
 
-    treemap(root);
+    treemap(tree);
 
     var cell = svg.selectAll("a")
-        .data(root.leaves())
+        .data(tree.leaves())
         .enter()
         .append("a")
         .attr("target", "_blank")
