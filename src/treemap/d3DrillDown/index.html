@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title>Drillable Treemaps</title>
+<style>
+    #chart {
+        width: 960px;
+        height: 500px;
+        background: #ddd;
+    }
+
+    text {
+        pointer-events: none;
+    }
+
+    .grandparent text {
+        font-weight: bold;
+    }
+
+    rect {
+        fill: none;
+        stroke: #fff;
+    }
+
+    rect.parent,
+    .grandparent rect {
+        stroke-width: 2px;
+    }
+
+    .grandparent rect {
+        fill: orange;
+    }
+
+    .grandparent:hover rect {
+        fill: #ee9700;
+    }
+
+    .children rect.parent,
+    .grandparent rect {
+        cursor: pointer;
+    }
+
+    .children rect.parent {
+        fill: #bbb;
+        fill-opacity: .5;
+    }
+
+    .children:hover rect.child {
+        fill: #bbb;
+    }
+
+</style>
+<body>
+
+<h1>Zoomable Treemaps</h1>
+
+<p id="chart"></p>
+
+<aside>Click any cell to zoom in, or the top orange label to zoom out.</aside>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<!--<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
+<script src="d3DrillDown.js"></script>
+</body>
