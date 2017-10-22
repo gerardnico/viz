@@ -4,6 +4,15 @@ var svg = d3.select("svg"),
 
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
+// A function to extract a description from the path
+// The second replace do a camelCase
+var pathToDesc = function(str) {
+    return str.replace(/_/g," ").replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+        return letter.toUpperCase();
+    });
+}
+
+
 var format = d3.format(",d");
 
 var treemap = d3.treemap()
@@ -34,16 +43,16 @@ d3.csv("data.csv", function (d) {
             return b.value - a.value || b.height - a.height;
         });
 
-    tree.eachAfter(function (d) {
-            if (d.value < 30) {
-                // Suppress the node from the parent
-                const index = d.parent.children.indexOf(d);
-                if (index !== -1) {
-                    d.parent.children.splice(index, 1);
-                }
-            }
-        }
-    );
+    // tree.eachAfter(function (d) {
+    //         if (d.value < 30) {
+    //             // Suppress the node from the parent
+    //             const index = d.parent.children.indexOf(d);
+    //             if (index !== -1) {
+    //                 d.parent.children.splice(index, 1);
+    //             }
+    //         }
+    //     }
+    // );
 
     treemap(tree);
 
@@ -53,8 +62,11 @@ d3.csv("data.csv", function (d) {
         .append("a")
         .attr("target", "_blank")
         .attr("xlink:href", function (d) {
-            var p = d.data.path.split("/");
-            return "https://github.com/";
+            var pagePath = d.data.path;
+            pagePath = pagePath.replace("pages\\","");
+            pagePath = pagePath.replace("\\.","/");
+            pagePath = pagePath.replace(/\\/g,"/");
+            return "https://gerardnico.com/wiki/"+pagePath;
         })
         .attr("transform", function (d) {
             return "translate(" + d.x0 + "," + d.y0 + ")";
@@ -93,7 +105,20 @@ d3.csv("data.csv", function (d) {
         .attr("x", 4)
         .attr("y", 13)
         .text(function (d) {
-            return d.data.path.substring(d.data.path.lastIndexOf("/") + 1, d.data.path.lastIndexOf("."));
+            var textToReturn = "";
+            var paths = d.data.path.split("\\");
+            var length = paths.length;
+            const lastPath = paths[length - 1];
+            if (length>=3){
+                if (lastPath!=".") {
+                    textToReturn = paths[length - 2] + " - " + lastPath;
+                } else {
+                    textToReturn = paths[length - 2];
+                }
+            } else {
+                textToReturn = lastPath;
+            }
+            return pathToDesc(textToReturn);
         });
 
     label.append("tspan")
